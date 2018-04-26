@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Chat IO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">{{title}}</a>
+        </nav>
+        <div class="container-fluid">
+            <div class="row mt-2">
+                <div class="col-2 list-users">
+                    <div class="card">
+                        <div class="card-header">
+                            <b>Users</b>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" v-for="u in users">{{u.first_name}} {{u.last_name}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-10 p-2 list-conversation">
+                    <div class="list-group">
+                        <div class="list-group-item flex-column align-items-start" v-for="c in reversedConversation">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ c.user.first_name }} {{ c.user.last_name }}</h5>
+                                <small>{{c.senton | fromNow}}</small>
+                            </div>
+                            <p class="mb-1">{{c.message}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row input-message py-2">
+                <div class="col-12">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter your message..." v-model="message" v-on:keyup.13="send">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" v-on:click="send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
