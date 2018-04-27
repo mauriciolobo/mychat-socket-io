@@ -14,3 +14,16 @@ div.container-fluid{
   
   div.list-conversation{
   }
+
+  div.backdrop{
+    position: fixed;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    z-index: 1;
+  }
+
+  div.userinput{
+      z-index: 1;
+      position: absolute;
+  }

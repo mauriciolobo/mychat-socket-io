@@ -12,6 +12,20 @@
 
 <body>
     <div id="app">
+
+        <div id="userAccess" v-if="!user">
+            <div class="backdrop"></div>
+
+            <div class="card userinput mx-auto"  style="width: 40%;margin-top: 30%;left: 30%;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter your name..." v-model="typedUser" v-on:keyup.13="enter">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary" v-on:click="enter">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand" href="#">{{title}}</a>
         </nav>
@@ -23,7 +37,7 @@
                             <b>Users</b>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item" v-for="u in users">{{u.first_name}} {{u.last_name}}</li>
+                            <li class="list-group-item" v-for="u in users">{{u.name}}</li>
                         </ul>
                     </div>
                 </div>
