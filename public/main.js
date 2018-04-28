@@ -1,5 +1,6 @@
 var socket = io();
 
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -7,11 +8,32 @@ var app = new Vue({
         users: [],
         conversation: [],
         message: '',
-        user:null,
+        user: null,
         typedUser: ''
     },
     mounted: function () {
-        
+        var self = this;
+        socket.on('message', function (c) {
+            console.log('MESSAGE RECEIVED:');
+            console.log(c);
+            console.log('--------------');
+
+            switch (c.type) {
+                case 'update users':
+                    self.users = c.users;
+                    if(c.user)
+                        self.addMessage(c.user, `User '${c.user.name}' entered...`);
+                    else
+                        self.addMessage(c.userleave, `User '${c.userleave.name}' has leaved...`);
+                    break;
+                case 'message':
+                    self.addMessage(c.data.user, c.data.message);
+                    break;
+                default:
+                    console.log(c);
+            }
+
+        });
     },
     computed: {
         reversedConversation() {
@@ -22,19 +44,31 @@ var app = new Vue({
         send() {
             var user = this.user;
             var message = this.message;
+            socket.emit('message', {
+                type: 'message',
+                data: {
+                    user,
+                    message
+                }
+            });            
+        },
+        join() {
+            this.user = {
+                name: this.typedUser
+            };
+            this.message = `User ${this.user.name} entered`;
+            socket.emit('add user', this.user);
+        },
+        addMessage(user, message) {
             var senton = Date.now();
-            this.conversation.push({
+            var c = {
                 user,
                 message,
                 senton
-            });
+            };
+            this.conversation.push(c);
+            console.log(this.conversation);
             this.message = '';
-        },
-        enter(){
-            this.user = { name: this.typedUser};
-            this.users.push(this.user);
-            this.message = `User ${this.user.name} entered`;
-            this.send();
         }
     },
     filters: {

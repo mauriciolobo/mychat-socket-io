@@ -18,9 +18,9 @@
 
             <div class="card userinput mx-auto"  style="width: 40%;margin-top: 30%;left: 30%;">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter your name..." v-model="typedUser" v-on:keyup.13="enter">
+                    <input type="text" class="form-control" placeholder="Enter your name..." v-model="typedUser" v-on:keyup.13="join">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-primary" v-on:click="enter">Login</button>
+                        <button class="btn btn-outline-primary" v-on:click="join">Login</button>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <div class="list-group">
                         <div class="list-group-item flex-column align-items-start" v-for="c in reversedConversation">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">{{ c.user.first_name }} {{ c.user.last_name }}</h5>
+                                <h5 class="mb-1">{{ c.user.name }}</h5>
                                 <small>{{c.senton | fromNow}}</small>
                             </div>
                             <p class="mb-1">{{c.message}}</p>
